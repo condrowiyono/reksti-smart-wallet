@@ -1,0 +1,70 @@
+@mixin toggler(
+      $size       : 16px,
+      $transition : .2s ease-out,
+      $color-bg   : #E1E1E1,
+      $color-on   : #16B5FF
+    ){
+      
+    background    : $color-bg;
+    border-radius : $size*2;
+    width         : $size*2.5;
+    transition    : $transition;
+      
+    &__label input:checked ~ .toggler{ background:$color-on; }
+      
+    &::before{
+        border-radius : $size;
+        width         : $size;
+        height        : $size;
+        transition    : $transition;
+    }
+}
+
+
+.toggler{
+    padding : 3px;
+    position : relative;
+  
+    @keyframes moveCircle1{
+        50%  { padding:0 12%; }
+    }
+
+    @keyframes moveCircle2{
+        50%  { padding:0 12%; }
+    }
+
+    &__label{
+        user-select:none;
+        display: flex;
+        align-items:center;
+        cursor:pointer;
+
+        span{ margin-right:1em; }
+
+        input{
+            &:checked{
+                ~ .toggler{
+                    &::before{
+                        transform : translateX(-100%);
+                        left      : 100%;
+                        animation : moveCircle2 .2s ease 1;
+                    }
+                }
+            }
+        }
+    }
+
+    &::before{
+        content       : '';
+        display       : block;
+        background    : white;
+        position      : relative;
+        left          : 0;
+        animation     : moveCircle1 .2s ease 1;
+    }
+}
+
+// extend "toggler" with specific settings
+.toggler{
+    @include toggler(16px, .2s cubic-bezier(.7,.15,.36,1), #E1E1E1, #16B5FF)
+}
